@@ -1,4 +1,4 @@
-let pageNumber = 1;
+let pageNumber = 0;
 let pageNames = ["intro-page", "waiting-page", "end-page"];
 let pages = pageNames.map((name) => document.getElementById(name));
 pages[pageNumber].style.opacity = 1;
