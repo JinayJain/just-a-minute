@@ -27,10 +27,14 @@ function startTimer() {
 function stopTimer() {
   console.log("Stopped timer.");
   let diff = new Date() - timerStart;
-  let errorStr = ((diff - 60 * 1000) / (60 * 1000) * 100).toFixed(2) + "% error";
+  let errorStr = ((diff - 60 * 1000) / (60 * 1000) * 100).toFixed(2);
+  path = firebase.firestore().collection('attempts').doc().set({error:errorStr})
+  errorStr = errorStr+ "% error"
   let elapsedStr = (diff / 1000).toFixed(2) + "s";
   $("#time-taken").text(elapsedStr);
   $("#percent-error").text(errorStr);
+
+
 }
 
 function handleKeypress(ev) {
@@ -45,13 +49,14 @@ let lastChoice = -1;
 
 // >:)
 function changeAnxietyInducingSentence() {
-  let fadeTime = 500;
+  let fadeTime = 600;
 
   let choices = [
     "Are you done yet?",
     "Too soon. Or are you too late?",
     "Too late. Or are you too soon?",
     "I'm getting bored.",
+    "Does time even exist?",
     "It feels like we just started!",
     "So, how are you today?",
     "...",
