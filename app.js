@@ -1,3 +1,50 @@
+import { app } from "./firebase.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  get,
+  child,
+} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+
+const ctx = document.getElementById("hist");
+const histogram = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "Number of People",
+        data: [],
+        backgroundColor: "#5a9270dd",
+      },
+    ],
+  },
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: "Histogram of Time Taken",
+      },
+    },
+    scales: {
+      x: {
+        suggestedMin: 0,
+        suggestedMax: 120,
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  },
+});
+
+const db = getDatabase(app);
+
 let pageNumber = 0;
 let pageNames = ["intro-page", "waiting-page", "end-page"];
 let pages = pageNames.map((name) => document.getElementById(name));
@@ -27,10 +74,50 @@ function startTimer() {
 function stopTimer() {
   console.log("Stopped timer.");
   let diff = new Date() - timerStart;
-  let errorStr = ((diff - 60 * 1000) / (60 * 1000) * 100).toFixed(2) + "% error";
-  let elapsedStr = (diff / 1000).toFixed(2) + "s";
+  let errorStr =
+    (((diff - 60 * 1000) / (60 * 1000)) * 100).toFixed(2) + "% error";
+  let elapsedSecs = diff / 1000;
+  let elapsedStr = elapsedSecs.toFixed(2) + "s";
   $("#time-taken").text(elapsedStr);
   $("#percent-error").text(errorStr);
+
+  // send results to the database
+  const newResult = push(ref(db, "results"));
+  set(newResult, {
+    timeTaken: elapsedSecs,
+  });
+
+  updateChart();
+}
+
+function updateChart() {
+  const dbRef = ref(db);
+  get(child(dbRef, "results")).then((snapshot) => {
+    if (snapshot.exists()) {
+      const results = snapshot.val();
+
+      const times = Object.values(results).map((r) => r.timeTaken);
+
+      // create a histogram with bins of 0 to 120 seconds, with a bin size of 10 seconds
+      const histData = {};
+      for (let i = 0; i < 120; i++) {
+        histData[i] = 0;
+      }
+
+      const binSize = 5;
+      times.forEach((t) => {
+        histData[Math.floor(t / binSize) * binSize] =
+          (histData[Math.floor(t / binSize) * binSize] || 0) + 1;
+      });
+
+      const labels = Object.keys(histData).map((k) => k + "s");
+
+      histogram.data.labels = labels;
+      histogram.data.datasets[0].data = Object.values(histData);
+
+      histogram.update();
+    }
+  });
 }
 
 function handleKeypress(ev) {

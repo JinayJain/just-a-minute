@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Just A Minute!</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div id="intro-page" class="page">
-    <div class="content">
-      <h1 class="title">Just a Minute!</h1>
-      <p>How well can you estimate a minute?</p>
-      <p>Press <span class="key-name">Space</span> to begin</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Just A Minute!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="intro-page" class="page">
+      <div class="content">
+        <h1 class="title">Just a Minute!</h1>
+        <p>How well can you estimate a minute?</p>
+        <p>Press <span class="key-name">Space</span> to begin</p>
+      </div>
     </div>
-  </div>
 
-  <div id="waiting-page" class="page">
-    <div class="content">
-      <p id="anxiety-inducing-sentence"></p>
-      <p>Press <span class="key-name">Space</span> to end the minute</p>
+    <div id="waiting-page" class="page">
+      <div class="content">
+        <p id="anxiety-inducing-sentence"></p>
+        <p>Press <span class="key-name">Space</span> to end the minute</p>
+      </div>
     </div>
-  </div>
 
-  <div id="end-page" class="page">
-    <div class="content">
-      <h1 id="time-taken"></h1>
-      <h2 id="percent-error"></h2>
-      <p>Press <span class="key-name">Space</span> to try again</p>
+    <div id="end-page" class="page">
+      <div class="content">
+        <canvas id="hist" width="700" height="400"></canvas>
+        <h1 id="time-taken"></h1>
+        <h2 id="percent-error"></h2>
+        <p>Press <span class="key-name">Space</span> to try again</p>
+      </div>
     </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
-</body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"
+      integrity="sha256-7lWo7cjrrponRJcS6bc8isfsPDwSKoaYfGIHgSheQkk="
+      crossorigin="anonymous"
+    ></script>
+    <script src="firebase.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+  </body>
 </html>
