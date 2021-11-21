@@ -166,6 +166,10 @@ function changeAnxietyInducingSentence() {
 }
 
 document.addEventListener("keypress", handleKeypress);
+let triggerButtons = document.querySelectorAll(".trigger-button");
+triggerButtons.forEach((b) => {
+    b.addEventListener("click", transition);
+});
 setInterval(() => {
     let now = new Date();
     if (now > changeTime) {
