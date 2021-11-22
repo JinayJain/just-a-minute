@@ -49,6 +49,7 @@ let pageNumber = 0;
 let pageNames = ["intro-page", "waiting-page", "end-page"];
 let pages = pageNames.map((name) => document.getElementById(name));
 pages[pageNumber].style.opacity = 1;
+pages[pageNumber].style.zIndex = 1;
 
 function transition() {
     pageNumber = (pageNumber + 1) % pages.length;
@@ -60,8 +61,13 @@ function transition() {
     }
 
     pages.forEach((p, i) => {
-        if (i === pageNumber) p.style.opacity = 1;
-        else p.style.opacity = 0;
+        if (i === pageNumber) {
+            p.style.opacity = 1;
+            p.style.zIndex = 1;
+        } else {
+            p.style.opacity = 0;
+            p.style.zIndex = 0;
+        }
     });
 }
 
@@ -132,14 +138,13 @@ let lastChoice = -1;
 
 // >:)
 function changeAnxietyInducingSentence() {
-    let fadeTime = 600;
+    let fadeTime = 500;
 
     let choices = [
         "Are you done yet?",
         "Too soon. Or are you too late?",
         "Too late. Or are you too soon?",
         "I'm getting bored.",
-        "Does time even exist?",
         "It feels like we just started!",
         "So, how are you today?",
         "...",
@@ -161,6 +166,10 @@ function changeAnxietyInducingSentence() {
 }
 
 document.addEventListener("keypress", handleKeypress);
+let triggerButtons = document.querySelectorAll(".trigger-button");
+triggerButtons.forEach((b) => {
+    b.addEventListener("click", transition);
+});
 setInterval(() => {
     let now = new Date();
     if (now > changeTime) {
