@@ -98,16 +98,33 @@ button {
 }
 
 #chart {
-  width: 700px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 #chart-wrapper {
   width: 100%;
-  overflow: auto;
 }
 
 .credit {
   font-size: 1rem;
   color: #5a9270;
+}
+
+a {
+  color: #5f544a;
+}
+
+a:hover {
+  color: #807163;
+}
+
+.socials {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+#social-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
 }
