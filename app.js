@@ -110,7 +110,7 @@ function updateChart() {
         histData[i] = 0;
       }
 
-      const binSize = 5;
+      const binSize = 1;
       times.forEach((t) => {
         histData[Math.floor(t / binSize) * binSize] =
           (histData[Math.floor(t / binSize) * binSize] || 0) + 1;
