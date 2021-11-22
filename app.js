@@ -87,11 +87,11 @@ function stopTimer() {
     $("#time-taken").text(elapsedStr);
     $("#percent-error").text(errorStr);
 
-    // send results to the database
-    const newResult = push(ref(db, "results"));
-    set(newResult, {
-        timeTaken: elapsedSecs,
-    });
+    // // send results to the database
+    // const newResult = push(ref(db, "results"));
+    // set(newResult, {
+    //     timeTaken: elapsedSecs,
+    // });
 
     updateChart();
 }
