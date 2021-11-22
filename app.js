@@ -89,6 +89,13 @@ function stopTimer() {
   $("#time-taken").text(elapsedStr);
   $("#percent-error").text(errorStr);
 
+  // update socials links
+  let errorSecs = Math.abs(elapsedSecs - 60).toFixed(2);
+  let twitterLink = `https://twitter.com/intent/tweet?text=I%20can%20estimate%20a%20minute%20within%20${errorSecs}%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0Ahttps%3A//jinay.dev/just-a-minute/`;
+  document.getElementById("twitter-share").href = twitterLink;
+  let linkedInLink = `https://www.linkedin.com/shareArticle?mini=true&url=https%3A//jinay.dev/just-a-minute/&title=The%20Minute%20Challenge&summary=I%20can%20estimate%20a%20minute%20within%20${errorSecs}%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0A&source=`;
+  document.getElementById("linkedin-share").href = linkedInLink;
+
   // send results to the database
   const newResult = push(ref(db, "results"));
   set(newResult, {
