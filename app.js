@@ -7,6 +7,7 @@ import {
   get,
   child,
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore.js";
 
 const ctx = document.getElementById("hist");
 const histogram = new Chart(ctx, {
@@ -44,6 +45,7 @@ const histogram = new Chart(ctx, {
 });
 
 const db = getDatabase(app);
+const firestore = getFirestore();
 
 let pageNumber = 0;
 let pageNames = ["intro-page", "waiting-page", "end-page"];
@@ -97,33 +99,136 @@ function stopTimer() {
 }
 
 function updateChart() {
-  const dbRef = ref(db);
-  get(child(dbRef, "results")).then((snapshot) => {
-    if (snapshot.exists()) {
-      const results = snapshot.val();
+  // i've had to freeze this to reduce data usage, fixing soon.
+  let histData = {
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 52,
+    6: 35,
+    7: 26,
+    8: 19,
+    9: 9,
+    10: 16,
+    11: 4,
+    12: 11,
+    13: 6,
+    14: 6,
+    15: 10,
+    16: 9,
+    17: 10,
+    18: 12,
+    19: 7,
+    20: 14,
+    21: 11,
+    22: 14,
+    23: 9,
+    24: 15,
+    25: 22,
+    26: 22,
+    27: 22,
+    28: 18,
+    29: 18,
+    30: 24,
+    31: 19,
+    32: 23,
+    33: 32,
+    34: 29,
+    35: 27,
+    36: 37,
+    37: 35,
+    38: 36,
+    39: 40,
+    40: 30,
+    41: 34,
+    42: 33,
+    43: 47,
+    44: 53,
+    45: 56,
+    46: 50,
+    47: 57,
+    48: 50,
+    49: 53,
+    50: 64,
+    51: 74,
+    52: 91,
+    53: 86,
+    54: 88,
+    55: 117,
+    56: 99,
+    57: 112,
+    58: 122,
+    59: 136,
+    60: 162,
+    61: 138,
+    62: 102,
+    63: 105,
+    64: 93,
+    65: 86,
+    66: 76,
+    67: 68,
+    68: 65,
+    69: 66,
+    70: 47,
+    71: 50,
+    72: 59,
+    73: 52,
+    74: 44,
+    75: 38,
+    76: 27,
+    77: 32,
+    78: 25,
+    79: 31,
+    80: 18,
+    81: 29,
+    82: 12,
+    83: 17,
+    84: 16,
+    85: 19,
+    86: 14,
+    87: 12,
+    88: 7,
+    89: 10,
+    90: 4,
+    91: 8,
+    92: 5,
+    93: 6,
+    94: 11,
+    95: 4,
+    96: 1,
+    97: 3,
+    98: 5,
+    99: 3,
+    100: 3,
+    101: 3,
+    102: 3,
+    103: 2,
+    104: 2,
+    105: 0,
+    106: 3,
+    107: 1,
+    108: 0,
+    109: 2,
+    110: 1,
+    111: 0,
+    112: 1,
+    113: 1,
+    114: 1,
+    115: 0,
+    116: 1,
+    117: 3,
+    118: 0,
+    119: 0,
+    120: 0,
+  };
+  const labels = Object.keys(histData).map((k) => k + "s");
 
-      const times = Object.values(results).map((r) => r.timeTaken);
+  histogram.data.labels = labels;
+  histogram.data.datasets[0].data = Object.values(histData);
 
-      // create a histogram with bins of 0 to 120 seconds, with a bin size of 10 seconds
-      const histData = {};
-      for (let i = 0; i < 120; i++) {
-        histData[i] = 0;
-      }
-
-      const binSize = 1;
-      times.forEach((t) => {
-        histData[Math.floor(t / binSize) * binSize] =
-          (histData[Math.floor(t / binSize) * binSize] || 0) + 1;
-      });
-
-      const labels = Object.keys(histData).map((k) => k + "s");
-
-      histogram.data.labels = labels;
-      histogram.data.datasets[0].data = Object.values(histData);
-
-      histogram.update();
-    }
-  });
+  histogram.update();
 }
 
 function handleKeypress(ev) {
