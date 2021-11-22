@@ -60,11 +60,11 @@ p {
     transition: background 0.8s;
 }
 .ripple:hover {
-    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%)
+    background: #6dad85 radial-gradient(circle, transparent 1%, #6dad85 1%)
         center/15000%;
 }
 .ripple:active {
-    background-color: #6eb9f7;
+    background-color: rgb(141, 192, 159);
     background-size: 100%;
     transition: background 0s;
 }
@@ -78,7 +78,19 @@ button {
     text-transform: uppercase;
     cursor: pointer;
     color: white;
-    background-color: #2196f3;
+    background-color: #5a9270;
     box-shadow: 0 0 4px #999;
     outline: none;
+}
+
+@media (min-width: 768px) {
+    .trigger-button {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .key-name {
+        display: none;
+    }
 }
