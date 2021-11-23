@@ -235,7 +235,7 @@ function updateChart(myTime) {
   histogram.data.datasets[0].data = Object.values(histData);
   histogram.data.datasets[0].backgroundColor = Object.keys(histData).map(
     (v) => {
-      if (v == 65) {
+      if (v == Math.floor(myTime)) {
         return "#496ad6";
       }
       return "#5a9270dd";
