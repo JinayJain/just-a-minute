@@ -4,10 +4,15 @@ import {
   ref,
   push,
   set,
-  get,
-  child,
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore.js";
+import {
+  initializeAppCheck,
+  ReCaptchaV3Provider,
+} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app-check.js";
+
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider("6LeaL1IdAAAAAJN9p1V7Mc6BQMFntamwBJ8t-0Pe"),
+});
 
 const ctx = document.getElementById("hist");
 const histogram = new Chart(ctx, {
@@ -45,7 +50,6 @@ const histogram = new Chart(ctx, {
 });
 
 const db = getDatabase(app);
-const firestore = getFirestore();
 
 let pageNumber = 0;
 let pageNames = ["intro-page", "waiting-page", "end-page"];
