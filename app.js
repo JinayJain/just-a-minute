@@ -102,10 +102,10 @@ function stopTimer() {
     timeTaken: elapsedSecs,
   });
 
-  updateChart();
+  updateChart(elapsedSecs);
 }
 
-function updateChart() {
+function updateChart(myTime) {
   // i've had to freeze this to reduce data usage, fixing soon.
   let histData = {
     0: 0,
@@ -233,6 +233,14 @@ function updateChart() {
 
   histogram.data.labels = labels;
   histogram.data.datasets[0].data = Object.values(histData);
+  histogram.data.datasets[0].backgroundColor = Object.keys(histData).map(
+    (v) => {
+      if (v == 65) {
+        return "#496ad6";
+      }
+      return "#5a9270dd";
+    }
+  );
 
   histogram.update();
 }
