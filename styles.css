@@ -48,6 +48,10 @@ p {
   color: #edf4ed;
 }
 
+.trigger:hover {
+  cursor: pointer;
+}
+
 #time-taken {
   color: #301014;
 }

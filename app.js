@@ -289,7 +289,7 @@ function changeAnxietyInducingSentence() {
 }
 
 document.addEventListener("keypress", handleKeypress);
-let triggerButtons = document.querySelectorAll(".trigger-button");
+let triggerButtons = document.querySelectorAll(".trigger");
 triggerButtons.forEach((b) => {
   b.addEventListener("click", transition);
 });
