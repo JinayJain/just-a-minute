@@ -33,6 +33,10 @@ const histogram = new Chart(ctx, {
         display: true,
         text: "Histogram of Time Taken",
       },
+      subtitle: {
+        display: true,
+        text: "Updated Nov 23, 2021, 8:00 AM EST",
+      },
     },
     scales: {
       x: {
