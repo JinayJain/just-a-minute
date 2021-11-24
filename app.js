@@ -1,56 +1,58 @@
 import { app } from "./firebase.js";
 import {
-  getDatabase,
-  ref,
-  push,
-  set,
+    getDatabase,
+    ref,
+    push,
+    set,
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 import {
-  initializeAppCheck,
-  ReCaptchaV3Provider,
+    initializeAppCheck,
+    ReCaptchaV3Provider,
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app-check.js";
 
 const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("6LeaL1IdAAAAAJN9p1V7Mc6BQMFntamwBJ8t-0Pe"),
+    provider: new ReCaptchaV3Provider(
+        "6LeaL1IdAAAAAJN9p1V7Mc6BQMFntamwBJ8t-0Pe"
+    ),
 });
 
 const ctx = document.getElementById("hist");
 const histogram = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: [],
-    datasets: [
-      {
-        label: "Number of People",
-        data: [],
-        backgroundColor: "#5a9270dd",
-      },
-    ],
-  },
-  options: {
-    plugins: {
-      title: {
-        display: true,
-        text: "Histogram of Time Taken",
-      },
-      subtitle: {
-        display: true,
-        text: "Updated Nov 23, 2021, 2:11 PM EST",
-      },
+    type: "bar",
+    data: {
+        labels: [],
+        datasets: [
+            {
+                label: "Number of People",
+                data: [],
+                backgroundColor: "#5a9270dd",
+            },
+        ],
     },
-    scales: {
-      x: {
-        suggestedMin: 0,
-        suggestedMax: 120,
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 1,
+    options: {
+        plugins: {
+            title: {
+                display: true,
+                text: "Histogram of Time Taken",
+            },
+            subtitle: {
+                display: true,
+                text: "Updated Nov 23, 2021, 8:13 PM EST",
+            },
         },
-      },
+        scales: {
+            x: {
+                suggestedMin: 0,
+                suggestedMax: 120,
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1,
+                },
+            },
+        },
     },
-  },
 });
 
 const db = getDatabase(app);
@@ -62,202 +64,202 @@ pages[pageNumber].style.opacity = 1;
 pages[pageNumber].style.zIndex = 1;
 
 function transition() {
-  pageNumber = (pageNumber + 1) % pages.length;
+    pageNumber = (pageNumber + 1) % pages.length;
 
-  if (pageNames[pageNumber] === "waiting-page") {
-    startTimer();
-  } else if (pageNames[pageNumber] === "end-page") {
-    stopTimer();
-  }
-
-  pages.forEach((p, i) => {
-    if (i === pageNumber) {
-      p.style.opacity = 1;
-      p.style.zIndex = 1;
-    } else {
-      p.style.opacity = 0;
-      p.style.zIndex = 0;
+    if (pageNames[pageNumber] === "waiting-page") {
+        startTimer();
+    } else if (pageNames[pageNumber] === "end-page") {
+        stopTimer();
     }
-  });
+
+    pages.forEach((p, i) => {
+        if (i === pageNumber) {
+            p.style.opacity = 1;
+            p.style.zIndex = 1;
+        } else {
+            p.style.opacity = 0;
+            p.style.zIndex = 0;
+        }
+    });
 }
 
 let timerStart = new Date();
 function startTimer() {
-  console.log("Timer started.");
-  timerStart = new Date();
+    console.log("Timer started.");
+    timerStart = new Date();
 }
 
 function stopTimer() {
-  console.log("Stopped timer.");
-  let diff = new Date() - timerStart;
-  let errorStr =
-    (((diff - 60 * 1000) / (60 * 1000)) * 100).toFixed(2) + "% error";
-  let elapsedSecs = diff / 1000;
-  let elapsedStr = elapsedSecs.toFixed(2) + "s";
-  $("#time-taken").text(elapsedStr);
-  $("#percent-error").text(errorStr);
+    console.log("Stopped timer.");
+    let diff = new Date() - timerStart;
+    let errorStr =
+        (((diff - 60 * 1000) / (60 * 1000)) * 100).toFixed(2) + "% error";
+    let elapsedSecs = diff / 1000;
+    let elapsedStr = elapsedSecs.toFixed(2) + "s";
+    $("#time-taken").text(elapsedStr);
+    $("#percent-error").text(errorStr);
 
-  // update socials links
-  let errorSecs = Math.abs(elapsedSecs - 60).toFixed(2);
-  let twitterLink = `https://twitter.com/intent/tweet?text=I%20can%20estimate%20a%20minute%20within%20${errorSecs}%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0Ahttps%3A//jinay.dev/just-a-minute/`;
-  document.getElementById("twitter-share").href = twitterLink;
-  let linkedInLink = `https://www.linkedin.com/shareArticle?mini=true&url=https%3A//jinay.dev/just-a-minute/&title=The%20Minute%20Challenge&summary=I%20can%20estimate%20a%20minute%20within%20${errorSecs}%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0A&source=`;
-  document.getElementById("linkedin-share").href = linkedInLink;
+    // update socials links
+    let errorSecs = Math.abs(elapsedSecs - 60).toFixed(2);
+    let twitterLink = `https://twitter.com/intent/tweet?text=I%20can%20estimate%20a%20minute%20within%20${errorSecs}%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0Ahttps%3A//jinay.dev/just-a-minute/`;
+    document.getElementById("twitter-share").href = twitterLink;
+    let linkedInLink = `https://www.linkedin.com/shareArticle?mini=true&url=https%3A//jinay.dev/just-a-minute/&title=The%20Minute%20Challenge&summary=I%20can%20estimate%20a%20minute%20within%20${errorSecs}%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0A&source=`;
+    document.getElementById("linkedin-share").href = linkedInLink;
 
-  // send results to the database
-  const newResult = push(ref(db, "results"));
-  set(newResult, {
-    timeTaken: elapsedSecs,
-  });
+    // send results to the database
+    const newResult = push(ref(db, "results"));
+    set(newResult, {
+        timeTaken: elapsedSecs,
+    });
 
-  updateChart(elapsedSecs);
+    updateChart(elapsedSecs);
 }
 
 function updateChart(myTime) {
-  // i've had to freeze this to reduce data usage, fixing soon.
-  let histData = {
-    0: 0,
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 697,
-    6: 541,
-    7: 396,
-    8: 294,
-    9: 238,
-    10: 227,
-    11: 191,
-    12: 190,
-    13: 152,
-    14: 192,
-    15: 139,
-    16: 155,
-    17: 175,
-    18: 178,
-    19: 190,
-    20: 205,
-    21: 218,
-    22: 248,
-    23: 251,
-    24: 288,
-    25: 289,
-    26: 325,
-    27: 356,
-    28: 391,
-    29: 418,
-    30: 441,
-    31: 480,
-    32: 497,
-    33: 542,
-    34: 552,
-    35: 600,
-    36: 576,
-    37: 684,
-    38: 733,
-    39: 772,
-    40: 785,
-    41: 917,
-    42: 873,
-    43: 897,
-    44: 1001,
-    45: 1026,
-    46: 1104,
-    47: 1231,
-    48: 1232,
-    49: 1291,
-    50: 1439,
-    51: 1428,
-    52: 1566,
-    53: 1701,
-    54: 1755,
-    55: 1915,
-    56: 1948,
-    57: 2070,
-    58: 2233,
-    59: 2786,
-    60: 2690,
-    61: 2378,
-    62: 2325,
-    63: 2146,
-    64: 1938,
-    65: 1888,
-    66: 1788,
-    67: 1549,
-    68: 1473,
-    69: 1437,
-    70: 1278,
-    71: 1193,
-    72: 1054,
-    73: 963,
-    74: 917,
-    75: 799,
-    76: 699,
-    77: 643,
-    78: 606,
-    79: 542,
-    80: 475,
-    81: 446,
-    82: 409,
-    83: 391,
-    84: 340,
-    85: 338,
-    86: 236,
-    87: 257,
-    88: 230,
-    89: 199,
-    90: 198,
-    91: 161,
-    92: 154,
-    93: 128,
-    94: 135,
-    95: 108,
-    96: 91,
-    97: 90,
-    98: 87,
-    99: 68,
-    100: 64,
-    101: 56,
-    102: 67,
-    103: 48,
-    104: 47,
-    105: 42,
-    106: 41,
-    107: 40,
-    108: 37,
-    109: 26,
-    110: 29,
-    111: 22,
-    112: 20,
-    113: 21,
-    114: 19,
-    115: 20,
-    116: 12,
-    117: 17,
-    118: 13,
-    119: 13,
-  };
-  const labels = Object.keys(histData).map((k) => k + "s");
+    // i've had to freeze this to reduce data usage, fixing soon.
+    let histData = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 798,
+        6: 600,
+        7: 458,
+        8: 337,
+        9: 276,
+        10: 254,
+        11: 219,
+        12: 208,
+        13: 171,
+        14: 210,
+        15: 157,
+        16: 184,
+        17: 200,
+        18: 206,
+        19: 211,
+        20: 233,
+        21: 246,
+        22: 275,
+        23: 281,
+        24: 330,
+        25: 327,
+        26: 351,
+        27: 389,
+        28: 435,
+        29: 467,
+        30: 497,
+        31: 524,
+        32: 544,
+        33: 597,
+        34: 616,
+        35: 675,
+        36: 639,
+        37: 749,
+        38: 808,
+        39: 846,
+        40: 865,
+        41: 984,
+        42: 946,
+        43: 988,
+        44: 1098,
+        45: 1111,
+        46: 1213,
+        47: 1324,
+        48: 1322,
+        49: 1394,
+        50: 1562,
+        51: 1562,
+        52: 1702,
+        53: 1837,
+        54: 1905,
+        55: 2079,
+        56: 2098,
+        57: 2255,
+        58: 2403,
+        59: 3003,
+        60: 2917,
+        61: 2571,
+        62: 2505,
+        63: 2289,
+        64: 2086,
+        65: 2044,
+        66: 1917,
+        67: 1677,
+        68: 1604,
+        69: 1546,
+        70: 1380,
+        71: 1269,
+        72: 1130,
+        73: 1034,
+        74: 971,
+        75: 856,
+        76: 753,
+        77: 702,
+        78: 648,
+        79: 562,
+        80: 520,
+        81: 485,
+        82: 438,
+        83: 409,
+        84: 363,
+        85: 365,
+        86: 262,
+        87: 279,
+        88: 249,
+        89: 210,
+        90: 220,
+        91: 176,
+        92: 168,
+        93: 145,
+        94: 147,
+        95: 120,
+        96: 97,
+        97: 94,
+        98: 91,
+        99: 77,
+        100: 67,
+        101: 64,
+        102: 70,
+        103: 55,
+        104: 56,
+        105: 48,
+        106: 45,
+        107: 44,
+        108: 41,
+        109: 27,
+        110: 32,
+        111: 25,
+        112: 23,
+        113: 22,
+        114: 22,
+        115: 21,
+        116: 14,
+        117: 17,
+        118: 14,
+        119: 15,
+    };
+    const labels = Object.keys(histData).map((k) => k + "s");
 
-  histogram.data.labels = labels;
-  histogram.data.datasets[0].data = Object.values(histData);
-  histogram.data.datasets[0].backgroundColor = Object.keys(histData).map(
-    (v) => {
-      if (v == Math.floor(myTime)) {
-        return "#496ad6";
-      }
-      return "#5a9270dd";
-    }
-  );
+    histogram.data.labels = labels;
+    histogram.data.datasets[0].data = Object.values(histData);
+    histogram.data.datasets[0].backgroundColor = Object.keys(histData).map(
+        (v) => {
+            if (v == Math.floor(myTime)) {
+                return "#496ad6";
+            }
+            return "#5a9270dd";
+        }
+    );
 
-  histogram.update();
+    histogram.update();
 }
 
 function handleKeypress(ev) {
-  if (ev.key === " ") {
-    // transition to next page
-    transition();
-  }
+    if (ev.key === " ") {
+        // transition to next page
+        transition();
+    }
 }
 
 let changeTime = new Date(0);
@@ -265,42 +267,42 @@ let lastChoice = -1;
 
 // >:)
 function changeAnxietyInducingSentence() {
-  let fadeTime = 500;
+    let fadeTime = 500;
 
-  let choices = [
-    "Are you done yet?",
-    "Too soon. Or are you too late?",
-    "Too late. Or are you too soon?",
-    "I'm getting bored.",
-    "It feels like we just started!",
-    "So, how are you today?",
-    "...",
-    "That spacebar is looking quite tempting :)",
-    "Let me know when you're done. I'm grabbing a coffee.",
-  ];
+    let choices = [
+        "Are you done yet?",
+        "Too soon. Or are you too late?",
+        "Too late. Or are you too soon?",
+        "I'm getting bored.",
+        "It feels like we just started!",
+        "So, how are you today?",
+        "...",
+        "That spacebar is looking quite tempting :)",
+        "Let me know when you're done. I'm grabbing a coffee.",
+    ];
 
-  let randomChoice = Math.floor(Math.random() * choices.length);
-  if (randomChoice == lastChoice)
-    randomChoice = (randomChoice + 1) % choices.length;
-  $("#anxiety-inducing-sentence")
-    .fadeTo(fadeTime / 2 - 1, 0.01, () => {
-      $("#anxiety-inducing-sentence").text(choices[randomChoice]);
-    })
-    .delay(1)
-    .fadeTo(fadeTime / 2, 1);
+    let randomChoice = Math.floor(Math.random() * choices.length);
+    if (randomChoice == lastChoice)
+        randomChoice = (randomChoice + 1) % choices.length;
+    $("#anxiety-inducing-sentence")
+        .fadeTo(fadeTime / 2 - 1, 0.01, () => {
+            $("#anxiety-inducing-sentence").text(choices[randomChoice]);
+        })
+        .delay(1)
+        .fadeTo(fadeTime / 2, 1);
 
-  lastChoice = randomChoice;
+    lastChoice = randomChoice;
 }
 
 document.addEventListener("keydown", handleKeypress);
 let triggerButtons = document.querySelectorAll(".trigger");
 triggerButtons.forEach((b) => {
-  b.addEventListener("click", transition);
+    b.addEventListener("click", transition);
 });
 setInterval(() => {
-  let now = new Date();
-  if (now > changeTime) {
-    changeAnxietyInducingSentence();
-    changeTime = new Date(now.getTime() + Math.random() * 5 * 1000 + 2000);
-  }
+    let now = new Date();
+    if (now > changeTime) {
+        changeAnxietyInducingSentence();
+        changeTime = new Date(now.getTime() + Math.random() * 5 * 1000 + 2000);
+    }
 }, 100);
