@@ -11,9 +11,13 @@
       integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-      />
+    />
 
-    <script defer data-domain="jinay.dev" src="https://stat.lab.jinay.dev/js/script.js"></script>
+    <script
+      defer
+      data-domain="jinay.dev"
+      src="https://stat.lab.jinay.dev/js/script.js"
+    ></script>
   </head>
   <body>
     <div id="intro-page" class="page">
@@ -92,5 +96,15 @@
     ></script>
     <script src="firebase.js" type="module"></script>
     <script src="app.js" type="module"></script>
+
+    <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+    <script>
+      kofiWidgetOverlay.draw("jinay", {
+        type: "floating-chat",
+        "floating-chat.donateButton.text": "Support me",
+        "floating-chat.donateButton.background-color": "#323842",
+        "floating-chat.donateButton.text-color": "#fff",
+      });
+    </script>
   </body>
 </html>
