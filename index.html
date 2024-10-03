@@ -1,111 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Just A Minute!</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
 
-    <script
-      defer
-      data-domain="jinay.dev"
-      src="https://stat.lab.jinay.dev/js/script.js"
-    ></script>
-  </head>
-  <body>
-    <div id="intro-page" class="page">
-      <div class="content">
-        <h1 class="title">Just a Minute!</h1>
-        <p>How well can you estimate a minute?</p>
-        <p>Press <span class="key-name trigger">Space</span> to begin</p>
-        <button class="ripple trigger-button trigger">Start</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play Just A Minute!</title>
+  <meta name="description"
+    content="Just A Minute is a game that challenges your ability to estimate a minute. Try it now and challenge your friends!" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script defer data-domain="jinay.dev" src="https://stat.lab.jinay.dev/js/script.js"></script>
+</head>
+
+<body>
+  <div id="intro-page" class="page">
+    <div class="content">
+      <h1 class="title">Just a Minute!</h1>
+      <p>How well can you estimate a minute?</p>
+      <p>Press <span class="key-name trigger">Space</span> to begin</p>
+      <button class="ripple trigger-button trigger">Start</button>
+    </div>
+  </div>
+
+  <div id="waiting-page" class="page">
+    <div class="content">
+      <p id="anxiety-inducing-sentence"></p>
+      <p>
+        Press <span class="key-name trigger">Space</span> to end the minute
+      </p>
+      <button class="ripple trigger-button trigger">Finish</button>
+    </div>
+  </div>
+
+  <div id="end-page" class="page">
+    <div id="chart-wrapper">
+      <div id="chart">
+        <canvas id="hist" width="700" height="400"></canvas>
       </div>
     </div>
+    <div class="content">
+      <h1 id="time-taken"></h1>
+      <h2 id="percent-error"></h2>
 
-    <div id="waiting-page" class="page">
-      <div class="content">
-        <p id="anxiety-inducing-sentence"></p>
-        <p>
-          Press <span class="key-name trigger">Space</span> to end the minute
-        </p>
-        <button class="ripple trigger-button trigger">Finish</button>
+      <p>Press <span class="key-name trigger">Space</span> to try again</p>
+
+      <p class="credit">
+        Check out my new project!
+        <a href="https://strand.jinay.dev" target="_blank">Strand</a> lets you
+        tell stories with strangers, a few sentences at a time.
+      </p>
+
+      <button class="ripple trigger-button trigger">Try Again</button>
+
+      <div class="socials">
+        <p id="social-text">Share your results:</p>
+        <a id="twitter-share" target="_blank"
+          href="https://twitter.com/intent/tweet?text=I%20can%20estimate%20a%20minute%20within%20(x)%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0Ahttps%3A//jinay.dev/just-a-minute/"><i
+            class="fab fa-twitter"></i></a>
+        <a id="linkedin-share" target="_blank"
+          href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//jinay.dev/just-a-minute/&title=The%20Minute%20Challenge&summary=I%20can%20estimate%20a%20minute%20within%20(x)%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0A&source="><i
+            class="fab fa-linkedin"></i></a>
+        <a id="facebook-share" target="_blank"
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjinay.dev%2Fjust-a-minute%2F"><i
+            class="fab fa-facebook"></i></a>
       </div>
+
+      <p class="credit">Created by Jinay Jain</p>
     </div>
+  </div>
 
-    <div id="end-page" class="page">
-      <div id="chart-wrapper">
-        <div id="chart">
-          <canvas id="hist" width="700" height="400"></canvas>
-        </div>
-      </div>
-      <div class="content">
-        <h1 id="time-taken"></h1>
-        <h2 id="percent-error"></h2>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"
+    integrity="sha256-7lWo7cjrrponRJcS6bc8isfsPDwSKoaYfGIHgSheQkk=" crossorigin="anonymous"></script>
+  <script src="firebase.js" type="module"></script>
+  <script src="app.js" type="module"></script>
 
-        <p>Press <span class="key-name trigger">Space</span> to try again</p>
+  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+  <script>
+    kofiWidgetOverlay.draw("jinay", {
+      type: "floating-chat",
+      "floating-chat.donateButton.text": "Support me",
+      "floating-chat.donateButton.background-color": "#323842",
+      "floating-chat.donateButton.text-color": "#fff",
+    });
+  </script>
+</body>
 
-        <p class="credit">
-          Check out my new project!
-          <a href="https://strand.jinay.dev" target="_blank">Strand</a> lets you
-          tell stories with strangers, a few sentences at a time.
-        </p>
-
-        <button class="ripple trigger-button trigger">Try Again</button>
-
-        <div class="socials">
-          <p id="social-text">Share your results:</p>
-          <a
-            id="twitter-share"
-            target="_blank"
-            href="https://twitter.com/intent/tweet?text=I%20can%20estimate%20a%20minute%20within%20(x)%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0Ahttps%3A//jinay.dev/just-a-minute/"
-            ><i class="fab fa-twitter"></i
-          ></a>
-          <a
-            id="linkedin-share"
-            target="_blank"
-            href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//jinay.dev/just-a-minute/&title=The%20Minute%20Challenge&summary=I%20can%20estimate%20a%20minute%20within%20(x)%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0A&source="
-            ><i class="fab fa-linkedin"></i
-          ></a>
-          <a
-            id="facebook-share"
-            target="_blank"
-            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjinay.dev%2Fjust-a-minute%2F"
-            ><i class="fab fa-facebook"></i
-          ></a>
-        </div>
-
-        <p class="credit">Created by Jinay Jain</p>
-      </div>
-    </div>
-
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"
-      integrity="sha256-7lWo7cjrrponRJcS6bc8isfsPDwSKoaYfGIHgSheQkk="
-      crossorigin="anonymous"
-    ></script>
-    <script src="firebase.js" type="module"></script>
-    <script src="app.js" type="module"></script>
-
-    <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
-    <script>
-      kofiWidgetOverlay.draw("jinay", {
-        type: "floating-chat",
-        "floating-chat.donateButton.text": "Support me",
-        "floating-chat.donateButton.background-color": "#323842",
-        "floating-chat.donateButton.text-color": "#fff",
-      });
-    </script>
-  </body>
 </html>
