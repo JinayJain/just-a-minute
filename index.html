@@ -102,7 +102,7 @@
 
   <div id="waiting-page"
     class="page absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-screen flex flex-col items-center justify-center">
-    <div class="text-center p-5 max-w-xl w-full space-y-4 flex flex-col items-center justify-center">
+    <div class="text-center p-5 max-w-lg md:max-w-xl w-full space-y-4 flex flex-col items-center justify-center">
       <p id="anxiety-inducing-sentence" class="text-primary text-xl"></p>
       <p class="text-primary text-xl">
         Press <button class="bg-dark p-1 rounded text-bg trigger hidden md:inline">Space</button> to end the minute
@@ -131,13 +131,6 @@
       <h1 id="time-taken" class="text-dark text-3xl"></h1>
       <h2 id="percent-error" class="text-primary text-2xl"></h2>
 
-      <p class="text-primary text-xl">Press <button
-          class="bg-dark p-1 rounded text-bg trigger hidden md:inline">Space</button> to try again</p>
-
-      <button
-        class="ripple trigger-button trigger mb-10 bg-primary text-white py-3 px-6 rounded shadow-md uppercase md:hidden">Try
-        Again</button>
-
       <div class="mt-10 mb-8 text-2xl social-icons">
         <p id="social-text" class="text-primary text-base mb-4">Share your results:</p>
         <a id="twitter-share" target="_blank" class="mx-3 text-primary hover:text-primary-light"
@@ -150,6 +143,15 @@
           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjinay.dev%2Fjust-a-minute%2F"><i
             class="fab fa-facebook"></i></a>
       </div>
+
+      <p class="text-primary text-xl">Press <button
+          class="bg-dark p-1 rounded text-bg trigger hidden md:inline">Space</button> to try again</p>
+
+      <button
+        class="ripple trigger-button trigger mb-10 bg-primary text-white py-3 px-6 rounded shadow-md uppercase md:hidden">Try
+        Again</button>
+
+
 
       <p class="text-primary text-base mt-8">Created by Jinay Jain</p>
     </div>
