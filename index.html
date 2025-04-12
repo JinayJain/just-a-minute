@@ -7,68 +7,151 @@
   <title>Play Just A Minute!</title>
   <meta name="description"
     content="Just A Minute is a game that challenges your ability to estimate a minute. Try it now and challenge your friends!" />
-  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sen: ['Sen', 'sans-serif'],
+          },
+          colors: {
+            'primary': '#5a9270',
+            'primary-light': '#6dad85',
+            'primary-lighter': '#8dc09f',
+            'dark': '#301014',
+            'bg': '#edf4ed',
+          },
+          spacing: {
+            'content': '1.5rem'
+          }
+        },
+      },
+    }
+  </script>
+
+  <style>
+    @theme {
+      button:not(:disabled) {
+        cursor: pointer;
+      }
+    }
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <script defer data-domain="jinay.dev" src="https://stat.lab.jinay.dev/js/script.js"></script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1377718461698269"
+    crossorigin="anonymous"></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap");
+
+    /* Add default spacing for paragraphs and headings */
+    p {
+      margin-bottom: 1rem;
+    }
+
+    h1,
+    h2 {
+      margin-bottom: 1.25rem;
+    }
+
+    .page {
+      opacity: 0;
+      transition: 0.7s;
+      z-index: 0;
+    }
+
+    .ripple {
+      background-position: center;
+      transition: background 0.8s;
+    }
+
+    .ripple:hover {
+      background: #6dad85 radial-gradient(circle, transparent 1%, #6dad85 1%) center/15000%;
+    }
+
+    .ripple:active {
+      background-color: rgb(141, 192, 159);
+      background-size: 100%;
+      transition: background 0s;
+    }
+
+    /* Social icons spacing */
+    .social-icons a {
+      margin: 0 0.75rem;
+    }
+  </style>
 </head>
 
-<body>
-  <div id="intro-page" class="page">
-    <div class="content">
-      <h1 class="title">Just a Minute!</h1>
-      <p>How well can you estimate a minute?</p>
-      <p>Press <span class="key-name trigger">Space</span> to begin</p>
-      <button class="ripple trigger-button trigger">Start</button>
+<body class="font-sen min-h-screen m-0 bg-bg">
+  <div id="intro-page" class="page absolute w-full min-h-screen flex flex-col items-center justify-center">
+    <div class="text-center p-5 max-w-lg space-y-4">
+      <h1 class="text-dark font-normal text-5xl">Just a Minute!</h1>
+      <p class="text-primary text-xl">How well can you estimate a minute?</p>
+      <p class="text-primary text-xl">Press <button
+          class="bg-dark p-1 rounded text-bg trigger hidden md:inline">Space</button> to begin</p>
+      <button
+        class="ripple trigger-button trigger mt-6 bg-primary text-white py-3 px-6 rounded shadow-md uppercase md:hidden">Start</button>
     </div>
   </div>
 
-  <div id="waiting-page" class="page">
-    <div class="content">
-      <p id="anxiety-inducing-sentence"></p>
-      <p>
-        Press <span class="key-name trigger">Space</span> to end the minute
+  <div id="waiting-page"
+    class="page absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-screen flex flex-col items-center justify-center">
+    <div class="text-center p-5 max-w-xl w-full space-y-4 flex flex-col items-center justify-center">
+      <p id="anxiety-inducing-sentence" class="text-primary text-xl"></p>
+      <p class="text-primary text-xl">
+        Press <button class="bg-dark p-1 rounded text-bg trigger hidden md:inline">Space</button> to end the minute
       </p>
-      <button class="ripple trigger-button trigger">Finish</button>
+      <button
+        class="ripple trigger-button trigger mt-6 bg-primary text-white py-3 px-6 rounded shadow-md uppercase md:hidden">Finish</button>
+
+      <div class="my-4 w-full border border-primary">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1377718461698269"
+          data-ad-slot="4281563421" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
     </div>
+
   </div>
 
-  <div id="end-page" class="page">
-    <div id="chart-wrapper">
-      <div id="chart">
+  <div id="end-page" class="page absolute w-full min-h-screen flex flex-col items-center justify-center">
+    <div id="chart-wrapper" class="w-full mb-8">
+      <div id="chart" class="max-w-[700px] mx-auto">
         <canvas id="hist" width="700" height="400"></canvas>
       </div>
     </div>
-    <div class="content">
-      <h1 id="time-taken"></h1>
-      <h2 id="percent-error"></h2>
+    <div class="text-center p-5 max-w-lg space-y-4">
+      <h1 id="time-taken" class="text-dark text-3xl"></h1>
+      <h2 id="percent-error" class="text-primary text-2xl"></h2>
 
-      <p>Press <span class="key-name trigger">Space</span> to try again</p>
+      <p class="text-primary text-xl">Press <button
+          class="bg-dark p-1 rounded text-bg trigger hidden md:inline">Space</button> to try again</p>
 
-      <p class="credit">
-        Check out my new project!
-        <a href="https://strand.jinay.dev" target="_blank">Strand</a> lets you
-        tell stories with strangers, a few sentences at a time.
-      </p>
+      <button
+        class="ripple trigger-button trigger mb-10 bg-primary text-white py-3 px-6 rounded shadow-md uppercase md:hidden">Try
+        Again</button>
 
-      <button class="ripple trigger-button trigger">Try Again</button>
-
-      <div class="socials">
-        <p id="social-text">Share your results:</p>
-        <a id="twitter-share" target="_blank"
+      <div class="mt-10 mb-8 text-2xl social-icons">
+        <p id="social-text" class="text-primary text-base mb-4">Share your results:</p>
+        <a id="twitter-share" target="_blank" class="mx-3 text-primary hover:text-primary-light"
           href="https://twitter.com/intent/tweet?text=I%20can%20estimate%20a%20minute%20within%20(x)%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0Ahttps%3A//jinay.dev/just-a-minute/"><i
             class="fab fa-twitter"></i></a>
-        <a id="linkedin-share" target="_blank"
+        <a id="linkedin-share" target="_blank" class="mx-3 text-primary hover:text-primary-light"
           href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//jinay.dev/just-a-minute/&title=The%20Minute%20Challenge&summary=I%20can%20estimate%20a%20minute%20within%20(x)%20seconds.%20See%20if%20you%20can%20beat%20my%20time!%0A%0A&source="><i
             class="fab fa-linkedin"></i></a>
-        <a id="facebook-share" target="_blank"
+        <a id="facebook-share" target="_blank" class="mx-3 text-primary hover:text-primary-light"
           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjinay.dev%2Fjust-a-minute%2F"><i
             class="fab fa-facebook"></i></a>
       </div>
 
-      <p class="credit">Created by Jinay Jain</p>
+      <p class="text-primary text-base mt-8">Created by Jinay Jain</p>
     </div>
   </div>
 
@@ -80,15 +163,7 @@
   <script src="firebase.js" type="module"></script>
   <script src="app.js" type="module"></script>
 
-  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
-  <script>
-    kofiWidgetOverlay.draw("jinay", {
-      type: "floating-chat",
-      "floating-chat.donateButton.text": "Support me",
-      "floating-chat.donateButton.background-color": "#323842",
-      "floating-chat.donateButton.text-color": "#fff",
-    });
-  </script>
+
 </body>
 
 </html>
